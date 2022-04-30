@@ -46,7 +46,7 @@ lint:
 	docker container run --rm --name tflint --env TFLINT_LOG=debug -v $$(pwd):/data -t ghcr.io/terraform-linters/tflint
 
 refresh:
-	terraform_0.14.3 refresh	-var-file=$(ENV).tfvars
+	terraform_0.14.3 refresh -var-file=$(ENV).tfvars
 
 output:
 	terraform_0.14.3 output -json
