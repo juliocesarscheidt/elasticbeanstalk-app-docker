@@ -19,13 +19,12 @@ create-backend-bucket:
 			--create-bucket-configuration LocationConstraint=$(AWS_BACKEND_REGION) --acl private
 
 create-workspace:
-# -@terraform_0.14.3 workspace new development 2> /dev/null
-# -@terraform_0.14.3 workspace new staging 2> /dev/null
-# -@terraform_0.14.3 workspace new production 2> /dev/null
+	-@terraform_0.14.3 workspace new development 2> /dev/null
+	-@terraform_0.14.3 workspace new staging 2> /dev/null
+	-@terraform_0.14.3 workspace new production 2> /dev/null
 	terraform_0.14.3 workspace select $(ENV)
 
-# init: create-backend-bucket
-init:
+init: create-backend-bucket
 	terraform_0.14.3 init -upgrade=true \
 		-backend-config="bucket=$(AWS_BACKEND_BUCKET)" \
 		-backend-config="key=state.tfstate" \
@@ -55,8 +54,7 @@ output:
 package:
 	bash package.sh
 
-# plan: validate lint
-plan:
+plan: validate lint
 	-@echo "Plan"
 	make package
 	terraform_0.14.3 plan \
